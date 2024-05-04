@@ -1,0 +1,4 @@
+python==3.9.13
+streamlit==1.24.0
+streamlit_webrtc latest
+opencv-python latest
