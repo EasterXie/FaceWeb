@@ -8,6 +8,7 @@ Created on Wed Jun 28 11:36:51 2023
 import streamlit as st
 import sqlite3
 import pandas as pd
+import cv2
 from face_detection import CatchUsbVideo, create_folder, delete_folder
 # import face_recognition 
 import face_train
