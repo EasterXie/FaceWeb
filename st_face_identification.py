@@ -9,7 +9,7 @@ import streamlit as st
 import sqlite3
 import pandas as pd
 from face_detection import CatchUsbVideo, create_folder, delete_folder
-import face_recognition 
+# import face_recognition 
 import face_train
 import test_detection
 from streamlit_webrtc import webrtc_streamer, VideoProcessorBase, ClientSettings
@@ -211,7 +211,7 @@ def camera_information():
 def camera_shot():
     train_name = st.text_input("输入生成训练集模型的文件名")
     if st.button("用指定的图片集训练模型"):
-        face_train.train(f'/Users/rundongxie/Desktop/face_project/model/face_model_03.keras')
+        face_train.train(f'./model/{train_name}.keras')
     # keras_file = st.file_uploader("选择Keras模型文件", type="keras")
     # if keras_file is not None:
     #     model_directory = "./model"
