@@ -213,6 +213,7 @@ def camera_shot():
     train_name = st.text_input("输入生成训练集模型的文件名")
     if st.button("用指定的图片集训练模型"):
         face_train.train(f'./model/{train_name}.keras')
+        st.success(f"模型{train_name}已训练完成")
     # keras_file = st.file_uploader("选择Keras模型文件", type="keras")
     # if keras_file is not None:
     #     model_directory = "./model"
