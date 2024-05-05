@@ -46,7 +46,7 @@ def read_path(path_name):
 
 num_to_labels = {}
 labels_to_num = {}
-with open("F:/app_project/web_face_identification/face_identification/face_project/data/num_to_labels.txt", "r") as f:
+with open("./data/num_to_labels.txt", "r") as f:
     num_to_labels_list = [line.split(",") for line in f.readlines()]
     for i in num_to_labels_list:
         num_to_labels[i[0]] = int(i[1].strip())
@@ -61,5 +61,5 @@ def load_dataset(path_name):
 
 
 if __name__ == '__main__':
-    images, labels = load_dataset("F:/app_project/web_face_identification/face_identification/face_project/data")
+    images, labels = load_dataset("./data")
     print(labels)

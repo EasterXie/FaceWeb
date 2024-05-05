@@ -10,7 +10,7 @@ from tensorflow.python.keras.utils.np_utils import to_categorical
 from keras.models import load_model
 from keras import backend as K
 from load_data import load_dataset, resize_image, IMAGE_SIZE
-import os
+
 
 
 
@@ -159,7 +159,6 @@ class Model:
 
 
     def face_predict(self, image):
- 
         if K.image_data_format == 'th' and image.shape != (1, 3, IMAGE_SIZE, IMAGE_SIZE):
             image = resize_image(image)  
             image = image.reshape((1, 3, IMAGE_SIZE, IMAGE_SIZE))  
@@ -178,7 +177,7 @@ class Model:
 
 
 def train(train_path):
-    dataset = Dataset('F:/app_project/web_face_identification/face_identification/face_project/data')
+    dataset = Dataset('./data')
     
     dataset.load(nb_classes=5)     
 
@@ -189,4 +188,4 @@ def train(train_path):
     model.save_model(file_path=train_path)
 
 if __name__ == '__main__':
-    pass
+    train('./model/face_model_03.keras')

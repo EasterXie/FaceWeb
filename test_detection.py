@@ -27,14 +27,9 @@ class FaceCaptureProcessor(VideoProcessorBase):
         face_image = frame[y - 10: y + h + 10, x - 10: x + w + 10]
         cv2.imwrite(img_name, face_image)
 
-def main():
-    st.title("人脸信息录入")
+def catch_face_info(iD, top_num):
 
-    st.markdown("### 视频捕获")
-    st.markdown("请在下方查看摄像头捕获的视频流，并进行人脸信息录入。")
-
-    path_name = "./data/2021302021175"
-    top_num = 50
+    path_name = f"./data/{iD}"
     sign = "frontalface"
 
     webrtc_ctx = webrtc_streamer(
@@ -51,4 +46,4 @@ def main():
         st.write("等待摄像头连接...")
 
 if __name__ == "__main__":
-    main()
+    catch_face_info(2022, 50)

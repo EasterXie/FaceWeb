@@ -11,7 +11,11 @@ import pandas as pd
 from face_detection import CatchUsbVideo, create_folder, delete_folder
 import face_recognition 
 import face_train
-import upload
+import test_detection
+from streamlit_webrtc import webrtc_streamer, VideoProcessorBase, ClientSettings
+# import upload
+
+
 def create_connection():
     try:
         conn = sqlite3.connect('students_data.db')  
@@ -179,22 +183,24 @@ def excel_input(conn, excel_path):
 
 
 def camera_information():
+    st.title("人脸信息录入")
     iD = st.text_input('请输入要采集学生的学号：')
-    directory = "F:/app_project/web_face_identification/face_identification/face_project/data"
+    directory = "./data"
     create_folder(directory, iD)
-    path_create = f"{directory}/{iD}"
-#在服务器上备份一份
-    remote_path = f"/test/web_face_identification/face_identification/face_project/data/{iD}"
 
-    if st.button('开始正脸采集'):
-        CatchUsbVideo("识别人脸区域", 0, path_create, 10)
-#在服务器上备份一份
-        upload.upload_folder_to_server(path_create, remote_path, '123.249.37.195', 'root', 'Hadoop@123')
+# #在服务器上备份一份
+#     remote_path = f"/test/web_face_identification/face_identification/face_project/data/{iD}"
 
-    if st.button('开始侧脸（左脸）采集'):
-        CatchUsbVideo("识别人脸区域", 0, path_create, 10, classer="F:/app_project/web_face_identification/face_identification/face_project/haarcascade_profileface.xml", sign="profileface")
-#在服务器上备份一份
-        upload.upload_folder_to_server(path_create, remote_path, '123.249.37.195', 'root', 'Hadoop@123')
+    # if st.button('开始正脸采集'):
+        # CatchUsbVideo("识别人脸区域", 0, path_create, 10)
+    test_detection.catch_face_info(iD, 400)
+# #在服务器上备份一份
+#         upload.upload_folder_to_server(path_create, remote_path, '123.249.37.195', 'root', 'Hadoop@123')
+
+#     if st.button('开始侧脸（左脸）采集'):
+#         CatchUsbVideo("识别人脸区域", 0, path_create, 10, classer="F:/app_project/web_face_identification/face_identification/face_project/haarcascade_profileface.xml", sign="profileface")
+# # #在服务器上备份一份
+#         upload.upload_folder_to_server(path_create, remote_path, '123.249.37.195', 'root', 'Hadoop@123')
 
     iD_delete = st.text_input('请输入要删除学生人脸数据的学号')
     path_delete = f"{directory}/{iD_delete}"
@@ -204,21 +210,19 @@ def camera_information():
 
 def camera_shot():
     train_name = st.text_input("输入生成训练集模型的文件名")
-    train_directory = "F:/app_project/web_face_identification/face_identification/face_project/model"
-    train_path = f"{train_directory}/{train_name}.keras"
     if st.button("用指定的图片集训练模型"):
-        face_train.train(train_path)
-    keras_file = st.file_uploader("选择Keras模型文件", type="keras")
-    if keras_file is not None:
-        model_directory = "F:/app_project/web_face_identification/face_identification/face_project/model"
-        model_path = f"{model_directory}/{keras_file.name}"
-    if st.button("开始拍照签到"):
-        face_recognition.face(model_path)
+        face_train.train(f'/Users/rundongxie/Desktop/face_project/model/face_model_03.keras')
+    # keras_file = st.file_uploader("选择Keras模型文件", type="keras")
+    # if keras_file is not None:
+    #     model_directory = "./model"
+    #     model_path = f"{model_directory}/{keras_file.name}"
+    # if st.button("开始拍照签到"):
+    #     face_recognition.face(model_path)
     
     
 def main():
     conn = create_connection()
-    st.title("人脸识别拍照签到")
+    # st.title("人脸识别拍照签到")
 
     menu = ["添加学生信息", "修改学生信息", "查询单个学生", "删除学生信息", "查询所有学生", "清除所有数据", "导入Excel数据", "采集人脸信息", "进行拍照签到"]
     choice = st.sidebar.selectbox("选择功能", menu)

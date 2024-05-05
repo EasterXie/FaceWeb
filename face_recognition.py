@@ -13,7 +13,7 @@ def face(path_model):
 
     cap = cv2.VideoCapture(0)
 
-    cascade_path = "F:/app_project/web_face_identification/face_identification/face_project/haarcascade_frontalface_alt2.xml"
+    cascade_path = "haarcascade_frontalface_alt2.xml"
 
     while True:
         ret, frame = cap.read()  
@@ -59,4 +59,4 @@ def face(path_model):
     cv2.destroyAllWindows()
 
 if __name__ == '__main__':
-    face("F:/app_project/web_face_identification/face_identification/face_project/model/face_model_03.keras")
+    face("./model/face_model_03.keras")
